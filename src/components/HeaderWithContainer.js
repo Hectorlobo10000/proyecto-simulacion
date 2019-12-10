@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,8 +33,11 @@ const useStyles = makeStyles(theme => ({
   paper: {
     marginLeft: 5,
     marginRight: 5,
-    height: 300,
+    /* height: 300, */
+    height: 'auto',
     background: 'none',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   title: {
     color: 'Black',
@@ -63,8 +67,147 @@ ElevationScroll.propTypes = {
   window: PropTypes.func,
 };
 
+
+
 export default function ElevateAppBar(props) {
   const classes = useStyles();
+
+  const [state, setState] = React.useState({
+    saveMonth: 0,
+    years: 0,
+    futures: [],
+  });
+
+  const handlerSaveMonth = event => {
+    setState({ ...state, saveMonth: parseFloat(event.target.value, 2) });
+  }
+
+  const handlerYears = event => {
+    setState({ ...state, years: parseFloat(event.target.value, 2) * 12 });
+  }
+
+  const math = (addSaveMonth, saveMonthInitial, i, ti) => {
+    const rate = parseFloat((ti / 360).toFixed(8), 8); //tasa nominal diaria
+    if (i === 1) {
+      const interest = parseFloat((addSaveMonth * rate * 30).toFixed(2), 2); //intereses
+      const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+      addSaveMonth = newSaveMonth;
+    }
+    else {
+      const interest = parseFloat(((addSaveMonth + saveMonthInitial) * rate * 30).toFixed(2), 2); //intereses
+      const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+      addSaveMonth = parseFloat((newSaveMonth + saveMonthInitial).toFixed(2));
+    }
+
+    //future.push(addSaveMonth);
+    return addSaveMonth;
+  }
+
+
+  const calculator = () => {
+    var future = [];
+    var addSaveMonth = state.saveMonth; //ahorro por mes, entrada del usuario
+    var saveMonthInitial =  state.saveMonth;
+    for (var i = 1; i <= state.years; i ++) { //numero de anos del ahorro
+      if (saveMonthInitial >= 500 && saveMonthInitial <= 50000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.035);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 50000.01 && saveMonthInitial <= 100000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.045);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 100000.01 && saveMonthInitial <= 200000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.05);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 200000.01 && saveMonthInitial <= 500000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0575);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 500000.01 && saveMonthInitial <= 1000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0650);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 1000000.01 && saveMonthInitial <= 2000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0675);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 2000000.01 && saveMonthInitial <= 5000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0725);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 5000000.01 && saveMonthInitial <= 10000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0750);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      } else if (state.saveMonth >= 10000000.01) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.08);
+        addSaveMonth = aSM
+        future.push(aSM);
+
+      }
+    }
+    setState({ ...state, futures: future });
+  }
+
+
+/*   const calculator = () => {
+    var future = [];
+    var addSaveMonth = state.saveMonth; //ahorro por mes, entrada del usuario
+    var saveMonthInitial =  state.saveMonth;
+    for (var i = 1; i <= state.years; i ++) { //numero de anos del ahorro
+      if (saveMonthInitial >= 500 && saveMonthInitial <= 50000) {
+        const rate = parseFloat((0.035 / 360).toFixed(8), 8); //tasa nominal diaria
+        if (i === 1) {
+          const interest = parseFloat((addSaveMonth * rate * 30).toFixed(2), 2); //intereses
+          const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+          addSaveMonth = newSaveMonth;
+        }
+        else {
+          const interest = parseFloat(((addSaveMonth + saveMonthInitial) * rate * 30).toFixed(2), 2); //intereses
+          const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+          addSaveMonth = parseFloat((newSaveMonth + saveMonthInitial).toFixed(2));
+        }
+
+        future.push(addSaveMonth);
+      } else if (state.saveMonth >= 50000.01 && state.saveMonth <= 100000) {
+        const rate = parseFloat((0.045 / 360).toFixed(8), 8); //tasa nominal diaria
+        if (i === 1) {
+          const interest = parseFloat((addSaveMonth * rate * 30).toFixed(2), 2); //intereses
+          const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+          addSaveMonth = newSaveMonth;
+        }
+        else {
+          const interest = parseFloat(((addSaveMonth + saveMonthInitial) * rate * 30).toFixed(2), 2); //intereses
+          const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
+          addSaveMonth = parseFloat((newSaveMonth + saveMonthInitial).toFixed(2));
+        }
+
+        future.push(addSaveMonth);
+      }
+    }
+    setState({ ...state, futures: future });
+  } */
+
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -79,24 +222,53 @@ export default function ElevateAppBar(props) {
       <Container>
         <Box>
         <FormControl fullWidth className={classes.root} noValidate autoComplete="off">
-          <TextField fullWidth id="outlined-basic" label="Ingrese valor" variant="outlined" />
+          <TextField
+            fullWidth
+            id="saveMonth"
+            label="Cantidad ahorro mensual"
+            variant="outlined"
+            type="number"
+            defaultValue={0}
+            onChange={handlerSaveMonth}
+          />
+          <TextField
+            fullWidth
+            id="years"
+            label="A;os"
+            variant="outlined"
+            type="number"
+            defaultValue={0}
+            onChange={handlerYears}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={calculator}
+          >
+            Calcular
+          </Button>
         </FormControl>
         <Grid container className={classes.rootGrid}>
           <Grid item xs={12}>
             <Grid container justify="center" className={classes.container}>
               <Grid item xs={4}>
                 <Paper className={classes.paper}>
-                  <Typography variant="h5" align="center" className={classes.title}>Banco 1</Typography>
+                  <Typography variant="h5" align="center" className={classes.title}>Bac</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.paper}>
-                  <Typography variant="h5" align="center" className={classes.title}>Banco 2</Typography>
+                  <Typography variant="h5" align="center" className={classes.title}>Banco Atlantida</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.paper}>
-                  <Typography variant="h5" align="center" className={classes.title}>Banco 3</Typography>
+                  <Typography variant="h5" align="center" className={classes.title}>Banco Occidente</Typography>
+                  {
+                    state.futures.map((value, index) => (
+                      <Typography key={value} variant="body2" align="left">{index + 1}. Interes mas ahorro mensual: {String(value)} LPS.</Typography>
+                    ))
+                  }
                 </Paper>
               </Grid>
             </Grid>

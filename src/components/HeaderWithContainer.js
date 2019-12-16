@@ -76,8 +76,18 @@ export default function ElevateAppBar(props) {
     saveMonth: 0,
     saveMonthD: 0,
     years: 0,
-    futuresL: [],
-    futuresD: [],
+    occidente: {
+      futuresL: [],
+      futuresD: [],
+    },
+    atlantida: {
+      futuresL: [],
+      futuresD: [], 
+    },
+    bac: {
+      futuresL: [],
+      futuresD: [],
+    }
   });
 
   const handlerSaveMonth = event => {
@@ -109,8 +119,7 @@ export default function ElevateAppBar(props) {
     return addSaveMonth;
   }
 
-
-  const calculator = () => {
+  const bankOccidente = () => {
     var future = [];
     var addSaveMonth = state.saveMonth; //ahorro por mes, entrada del usuario
     var saveMonthInitial =  state.saveMonth;
@@ -204,8 +213,173 @@ export default function ElevateAppBar(props) {
 
       }
     }
-    setState({ ...state, futuresL: future, futuresD: futureD });
-    //setState({ ...state, futuresD: futureD });
+
+    return {
+      future,
+      futureD
+    }
+  }
+
+  const bankAtlantida = () => {
+    var future = [];
+    var addSaveMonth = state.saveMonth; //ahorro por mes, entrada del usuario
+    var saveMonthInitial =  state.saveMonth;
+
+    for (var i = 1; i <= state.years; i ++) { //numero de anos del ahorro
+      if (saveMonthInitial >= 5000 && saveMonthInitial <= 10000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0025);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 10000.01 && saveMonthInitial <= 50000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0375);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 50000.01 && saveMonthInitial <= 100000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.045);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 100000.01 && saveMonthInitial <= 500000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.05);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 500000.01 && saveMonthInitial <= 1000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.06);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 1000000.01) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.07);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      }
+    }
+
+    var futureD = [];
+    var addSaveMonthD = state.saveMonthD; 
+    var saveMonthInitialD =  state.saveMonthD;
+
+    for (var j = 1; j <= state.years; j++) { //numero de anos del ahorro
+      if (saveMonthInitialD >= 5000 && saveMonthInitialD <= 15000) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.005);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      } else if (saveMonthInitialD >= 15000.01 && saveMonthInitialD <= 50000) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.01);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      } else if (saveMonthInitialD >= 50000.01) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.015);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      }
+    }
+    return {
+      future,
+      futureD
+    }
+  }
+
+  const bankBac = () => {
+    var future = [];
+    var addSaveMonth = state.saveMonth; //ahorro por mes, entrada del usuario
+    var saveMonthInitial =  state.saveMonth;
+
+    for (var i = 1; i <= state.years; i ++) { //numero de anos del ahorro
+      if (saveMonthInitial >= 5000 && saveMonthInitial <= 10000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0025);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 10000.01 && saveMonthInitial <= 50000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.0375);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 50000.01 && saveMonthInitial <= 100000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.045);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 100000.01 && saveMonthInitial <= 500000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.05);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 500000.01 && saveMonthInitial <= 1000000) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.06);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      } else if (saveMonthInitial >= 1000000.01) {
+        
+        const aSM = math(addSaveMonth, saveMonthInitial, i, 0.07);
+        addSaveMonth = aSM;
+        future.push(aSM);
+
+      }
+    }
+
+    var futureD = [];
+    var addSaveMonthD = state.saveMonthD; 
+    var saveMonthInitialD =  state.saveMonthD;
+
+    for (var j = 1; j <= state.years; j++) { //numero de anos del ahorro
+      if (saveMonthInitialD >= 5000 && saveMonthInitialD <= 15000) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.005);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      } else if (saveMonthInitialD >= 15000.01 && saveMonthInitialD <= 50000) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.01);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      } else if (saveMonthInitialD >= 50000.01) {
+        
+        const aSM = math(addSaveMonthD, saveMonthInitialD, j, 0.015);
+        addSaveMonthD = aSM;
+        futureD.push(aSM);
+
+      }
+    }
+    return {
+      future,
+      futureD
+    }
+  }
+
+  const calculator = () => {
+    const atlantida = bankAtlantida();
+    const occidente = bankOccidente();
+    setState({ 
+      ...state,
+      occidente: {  futuresL: occidente.future, futuresD: occidente.futureD },
+      atlantida: { futuresL: atlantida.future, futuresD: atlantida.futureD }
+    });
   }
 
   return (
@@ -268,6 +442,18 @@ export default function ElevateAppBar(props) {
               <Grid item xs={4}>
                 <Paper className={classes.paper}>
                   <Typography variant="h5" align="center" className={classes.title}>Banco Atlantida</Typography>
+                  <Typography variant="body1" align="left">Cuenta de ahorro en lempiras</Typography>
+                  {
+                    state.atlantida.futuresL.map((value, index) => (
+                      <Typography key={value} variant="body2" align="left">{index + 1}. Interes mas ahorro mensual: {String(value)} LPS.</Typography>
+                    ))
+                  }
+                  <Typography variant="body1" align="left">Cuenta de ahorro en Dolares</Typography>
+                  {
+                    state.atlantida.futuresD.map((value, index) => (
+                      <Typography key={value} variant="body2" align="left">{index + 1}. Interes mas ahorro mensual: {String(value)} USD.</Typography>
+                    ))
+                  }
                 </Paper>
               </Grid>
               <Grid item xs={4}>
@@ -275,13 +461,13 @@ export default function ElevateAppBar(props) {
                   <Typography variant="h5" align="center" className={classes.title}>Banco Occidente</Typography>
                   <Typography variant="body1" align="left">Cuenta de ahorro en lempiras</Typography>
                   {
-                    state.futuresL.map((value, index) => (
+                    state.occidente.futuresL.map((value, index) => (
                       <Typography key={value} variant="body2" align="left">{index + 1}. Interes mas ahorro mensual: {String(value)} LPS.</Typography>
                     ))
                   }
                   <Typography variant="body1" align="left">Cuenta de ahorro en Dolares</Typography>
                   {
-                    state.futuresD.map((value, index) => (
+                    state.occidente.futuresD.map((value, index) => (
                       <Typography key={value} variant="body2" align="left">{index + 1}. Interes mas ahorro mensual: {String(value)} USD.</Typography>
                     ))
                   }

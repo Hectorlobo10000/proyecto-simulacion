@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Taps from './Taps';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -499,12 +500,13 @@ export default function ElevateAppBar(props) {
             Calcular
           </Button>
         </FormControl>
+        <Taps />
         <Grid container className={classes.rootGrid}>
           <Grid item xs={12}>
             <Grid container justify="center" className={classes.container}>
               <Grid item xs={4}>
                 <Paper className={classes.paper}>
-                  <Typography variant="h5" align="center" className={classes.title}>Bac</Typography>
+                  <Typography variant="h5" align="center" className={classes.title}>BAC</Typography>
                   <Typography variant="body1" align="left">Cuenta de ahorro en lempiras</Typography>
                   {
                     state.bac.futuresL.map((value, index) => (

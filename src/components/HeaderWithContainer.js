@@ -112,7 +112,7 @@ export default function ElevateAppBar(props) {
 
   const math = (addSaveMonth, saveMonthInitial, i, ti) => {
     const rate = parseFloat((ti / 360).toFixed(8), 8); //tasa nominal diaria
-    var inter = 0;
+    let inter = 0;
     if (i === 1) {
       const interest = parseFloat((addSaveMonth * rate * 30).toFixed(2), 2); //intereses
       const newSaveMonth = parseFloat((addSaveMonth + interest).toFixed(2), 2); //nuevo capital
@@ -191,6 +191,8 @@ export default function ElevateAppBar(props) {
         addSaveMonth = aSM;
         future.push({ saveMonthInitial, aSM, inter });
 
+      } else {
+        future.push({ saveMonthInitial, aSM: saveMonthInitial, inter: 0 });
       }
     }
 
@@ -223,6 +225,8 @@ export default function ElevateAppBar(props) {
         addSaveMonthD = aSM;
         futureD.push({ saveMonthInitialD, aSM, inter });
 
+      } else {
+        futureD.push({ saveMonthInitialD, aSM: saveMonthInitialD, inter: 0 });
       }
     }
 
@@ -298,6 +302,8 @@ export default function ElevateAppBar(props) {
         addSaveMonth = aSM;
         future.push({ saveMonthInitial, aSM, inter });
 
+      }  else {
+        future.push({ saveMonthInitial, aSM: saveMonthInitial, inter: 0 });
       }
     }
 
@@ -348,6 +354,8 @@ export default function ElevateAppBar(props) {
         addSaveMonthD = aSM;
         futureD.push({ saveMonthInitialD, aSM, inter });
 
+      } else {
+        futureD.push({ saveMonthInitialD, aSM: saveMonthInitialD, inter: 0 });
       }
     }
     return {
@@ -398,6 +406,8 @@ export default function ElevateAppBar(props) {
         addSaveMonth = aSM;
         future.push({ saveMonthInitial, aSM, inter });
 
+      }  else {
+        future.push({ saveMonthInitial, aSM: saveMonthInitial, inter: 0 });
       }
     }
 
@@ -442,6 +452,8 @@ export default function ElevateAppBar(props) {
         addSaveMonthD = aSM;
         futureD.push({ saveMonthInitialD, aSM, inter });
 
+      } else {
+        futureD.push({ saveMonthInitialD, aSM: saveMonthInitialD, inter: 0 });
       }
     }
     return {
@@ -545,7 +557,7 @@ export default function ElevateAppBar(props) {
           <Typography variant="body1" align="left">Cuenta de ahorros en Dolares intereses capitalizables.</Typography>
           {
             state.choiceD.map(value => (
-              <Typography key={value.interest} variant="body1" align="left">{`${value.name}: ${value.interest} USD.`}</Typography>
+              <Typography key={value.name} variant="body1" align="left">{`${value.name}: ${value.interest} USD.`}</Typography>
             ))
           }
         </Paper>

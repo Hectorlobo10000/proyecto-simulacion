@@ -32,8 +32,8 @@ export default function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.data.map(row => (
-            <TableRow key={row.of}>
+          {props.data.map((row, index) => (
+            <TableRow key={row.of + index +1}>
               <TableCell align="left">{row.of}</TableCell>
               <TableCell align="left">{row.to}</TableCell>
               <TableCell align="left">{row.currency}</TableCell>
